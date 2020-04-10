@@ -77,6 +77,9 @@ namespace WpfGMap
 
             GMapCircle gMapCircle = new GMapCircle(new PointLatLng(38, 128), new PointLatLng(38.001, 128.001));
             gMapControl.Markers.Add(gMapCircle);
+
+            GMapRectangle gMapRectangle = new GMapRectangle(new PointLatLng(38, 128), new PointLatLng(38.001, 128.001));
+            gMapControl.Markers.Add(gMapRectangle);
         }
         GMapPolygon gMapPolygon;
         Dictionary<Thumb, GMapMarker> dicMarker = new Dictionary<Thumb, GMapMarker>();
