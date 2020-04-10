@@ -1,0 +1,22 @@
+﻿<Window x:Class="WpfGMap.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:gmaps="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
+        xmlns:local="clr-namespace:WpfGMap"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <gmaps:GMapControl Grid.Column="0" x:Name="gMapControl" 
+                           MaxZoom="19" MinZoom="7" Loaded="gMapControl_Loaded" MouseWheelZoomType="MousePositionWithoutCenter"/>
+
+        <StackPanel VerticalAlignment="Top" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10">
+            <Button Content="편집" Margin="2"/>
+            <Button Content="삭제" Margin="2"/>
+            <Button Content="다각형 추가" Margin="2"/>
+            <Button Content="원 추가" Margin="2"/>
+            <Button Content="사각형 추가" Margin="2"/>
+        </StackPanel>
+    </Grid>
+</Window>
