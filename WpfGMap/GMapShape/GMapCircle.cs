@@ -16,9 +16,9 @@ namespace WpfGMap.GMapShape
         public GMapCircle(PointLatLng pos, PointLatLng pos2) : base(new PointLatLng((pos.Lat + pos2.Lat) / 2, (pos.Lng + pos2.Lng) / 2))
         {
             //this.Position = new PointLatLng((pos.Lat + pos2.Lat) / 2, (pos.Lng + pos2.Lng) / 2);
-            points = new List<PointLatLng>();
-            points.Add(pos);
-            points.Add(pos2);
+            Points = new List<PointLatLng>();
+            Points.Add(pos);
+            Points.Add(pos2);
 
             Path path = new Path();
             //(Shape as Path)
@@ -35,21 +35,20 @@ namespace WpfGMap.GMapShape
             Shape = path;
         }
 
-        private List<PointLatLng> points;
-        public List<PointLatLng> Points { get => points; set => points = value; }
+        public List<PointLatLng> Points { get; set; }
 
         public Path CreatePath(List<Point> localPath, bool addBlurEffect)
         {
             Path path = (Shape as Path);
             EllipseGeometry myEllipseGeometry = path.Data as EllipseGeometry;
             //EllipseGeometry myEllipseGeometry = new EllipseGeometry();
-            var point1 = Map.FromLatLngToLocal(points[0]);
-            var point2 = Map.FromLatLngToLocal(points[1]);
-            var radiusX = Math.Abs(point1.X - point2.X) / 2;
-            var radiusY = Math.Abs(point1.Y - point2.Y) / 2;
-            myEllipseGeometry.Center = new Point(radiusX, -radiusY);
-            myEllipseGeometry.RadiusX = radiusX;
-            myEllipseGeometry.RadiusY = radiusY;
+            var point1 = Map.FromLatLngToLocal(Points[0]);
+            var point2 = Map.FromLatLngToLocal(Points[1]);
+            var centerX = (point2.X - point1.X) / 2;
+            var centerY = (point2.Y - point1.Y) / 2;
+            myEllipseGeometry.Center = new Point(centerX, centerY);
+            myEllipseGeometry.RadiusX = Math.Abs(centerX);
+            myEllipseGeometry.RadiusY = Math.Abs(centerY);
 
             //GeometryGroup myGeometryGroup = new GeometryGroup();
             //myGeometryGroup.Children.Add(myEllipseGeometry);

@@ -6,17 +6,19 @@
         xmlns:gmaps="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
         xmlns:local="clr-namespace:WpfGMap"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" KeyDown="Window_KeyDown">
     <Grid>
         <gmaps:GMapControl Grid.Column="0" x:Name="gMapControl" 
-                           MaxZoom="19" MinZoom="7" Loaded="gMapControl_Loaded" MouseWheelZoomType="MousePositionWithoutCenter"/>
+                           MaxZoom="19" MinZoom="7" Loaded="gMapControl_Loaded" MouseWheelZoomType="MousePositionWithoutCenter" 
+                           MouseMove="gMapControl_MouseMove" MouseLeftButtonDown="gMapControl_MouseLeftButtonDown" MouseLeftButtonUp="gMapControl_MouseLeftButtonUp"/>
 
         <StackPanel VerticalAlignment="Top" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10">
-            <Button Content="편집" Margin="2"/>
-            <Button Content="삭제" Margin="2"/>
-            <Button Content="다각형 추가" Margin="2"/>
-            <Button Content="원 추가" Margin="2"/>
-            <Button Content="사각형 추가" Margin="2"/>
+            <Button Content="수정" Margin="2" Click="ShapeEdit_Click"/>
+            <Button Content="취소" Margin="2" Click="ShapeCancel_Click"/>
+            <Button Content="다음" Margin="2"/>
+            <Button Content="다각형 추가" Click="ShapeAdd_Click" Margin="2"/>
+            <Button Content="원 추가" Click="ShapeAdd_Click" Margin="2"/>
+            <Button Content="사각형 추가" Click="ShapeAdd_Click" Margin="2"/>
         </StackPanel>
     </Grid>
 </Window>

@@ -16,9 +16,9 @@ namespace WpfGMap.GMapShape
         public GMapRectangle(PointLatLng pos, PointLatLng pos2) : base(new PointLatLng((pos.Lat + pos2.Lat) / 2, (pos.Lng + pos2.Lng) / 2))
         {
             //this.Position = new PointLatLng((pos.Lat + pos2.Lat) / 2, (pos.Lng + pos2.Lng) / 2);
-            points = new List<PointLatLng>();
-            points.Add(pos);
-            points.Add(pos2);
+            Points = new List<PointLatLng>();
+            Points.Add(pos);
+            Points.Add(pos2);
 
             Path path = new Path();
             //(Shape as Path)
@@ -33,15 +33,14 @@ namespace WpfGMap.GMapShape
             Shape = path;
         }
 
-        private List<PointLatLng> points;
-        public List<PointLatLng> Points { get => points; set => points = value; }
+        public List<PointLatLng> Points { get; set; }
 
         public Path CreatePath(List<Point> localPath, bool addBlurEffect)
         {
             Path path = (Shape as Path);
             RectangleGeometry myRectangleGeometry = path.Data as RectangleGeometry;
-            var point1 = Map.FromLatLngToLocal(points[0]);
-            var point2 = Map.FromLatLngToLocal(points[1]);
+            var point1 = Map.FromLatLngToLocal(Points[0]);
+            var point2 = Map.FromLatLngToLocal(Points[1]);
             myRectangleGeometry.Rect = new Rect(new Point(0, 0), new Point(point2.X - point1.X, point2.Y - point1.Y));
 
             return path;
