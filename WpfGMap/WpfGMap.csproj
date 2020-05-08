@@ -114,7 +114,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="GMapEditor\ShapeEditor.cs" />
+    <Compile Include="GMapShape\GMapBaseShape.cs" />
     <Compile Include="GMapShape\GMapCircle.cs" />
+    <Compile Include="GMapShape\GMapEllipse.cs" />
+    <Compile Include="GMapShape\GMapLine.cs" />
+    <Compile Include="GMapShape\GMapPath.cs" />
     <Compile Include="GMapShape\GMapRectangle.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
