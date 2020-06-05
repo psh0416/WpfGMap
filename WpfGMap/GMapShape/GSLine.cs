@@ -11,9 +11,9 @@ using System.Windows.Shapes;
 
 namespace WpfGMap.GMapShape
 {
-    class GMapLine : GMapBaseShape
+    class GSLine : GMapBaseShape
     {
-        public GMapLine(PointLatLng startPoint, PointLatLng endPoint) : base(startPoint)
+        public GSLine(PointLatLng startPoint, PointLatLng endPoint) : base(startPoint)
         {
             Points = new List<PointLatLng>();
             Points.Add(startPoint);
@@ -29,11 +29,9 @@ namespace WpfGMap.GMapShape
             Shape = path;
         }
 
-        public override List<PointLatLng> Points { get; set; }
-
         public override Path CreatePath(List<Point> localPath, bool addBlurEffect)
         {
-            Path path = GetShape();
+            Path path = MyPath;
             LineGeometry myLineGeometry = path.Data as LineGeometry ?? new LineGeometry();
             myLineGeometry.StartPoint = localPath[0];
             myLineGeometry.EndPoint = localPath[1];

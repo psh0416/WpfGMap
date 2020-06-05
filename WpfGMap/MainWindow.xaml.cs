@@ -60,10 +60,10 @@ namespace WpfGMap
             gMapControl.IgnoreMarkerOnMouseWheel = true;
 
 
-            GMapCircle gMapCircle = new GMapCircle(new PointLatLng(38, 128), new PointLatLng(38.001, 128.001));
+            GSCircle gMapCircle = new GSCircle(new PointLatLng(38, 128), new PointLatLng(38.001, 128.001));
             
 
-            GMapRectangle gMapRectangle = new GMapRectangle(new PointLatLng(38, 128), new PointLatLng(38.001, 128.001));
+            GSRectangle gMapRectangle = new GSRectangle(new PointLatLng(38, 128), new PointLatLng(38.001, 128.001));
             
             gMapRectangle.Shape.IsHitTestVisible = true;
 
@@ -152,13 +152,17 @@ namespace WpfGMap
             PointLatLng LatLng = gMapControl.FromLocalToLatLng((int)point.X, (int)point.Y);
             if (AddType == ShapeAddType.Circle) 
             {
-                AddShape = new GMapCircle(LatLng, LatLng);
+                AddShape = new GSCircle(LatLng, LatLng);
                 gMapControl.Markers.Add(AddShape as GMapMarker);
+                var pos = Mouse.GetPosition(gMapControl);
+                Mouse.Capture(gMapControl);
             }
             else if (AddType == ShapeAddType.Rectangle)
             {
-                AddShape = new GMapRectangle(LatLng, LatLng);
+                AddShape = new GSRectangle(LatLng, LatLng);
                 gMapControl.Markers.Add(AddShape as GMapMarker);
+                var pos = Mouse.GetPosition(gMapControl);
+                Mouse.Capture(gMapControl);
             }
             else if (AddType == ShapeAddType.Polygon)
             {
@@ -185,6 +189,7 @@ namespace WpfGMap
                 AddType = ShapeAddType.None;
                 ShapeList.Add(AddShape);
                 AddShape = null;
+                Mouse.Capture(null);
             }
         }
     }

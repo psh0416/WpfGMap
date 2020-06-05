@@ -8,27 +8,20 @@ using System.Windows.Shapes;
 
 namespace WpfGMap.GMapShape
 {
-    class GMapPath : GMapBaseShape
+    class GSRoute : GMapBaseShape
     {
-        public GMapPath(IEnumerable<PointLatLng> points) : base(points.FirstOrDefault())
+        public GSRoute(IEnumerable<PointLatLng> points) : base(points.FirstOrDefault())
         {
-            Points = new List<PointLatLng>();
-            foreach (var item in points)
-            {
-                Points.Add(item);
-            }
-            Path path = new Path();
-            Shape = path;
+            Points = new List<PointLatLng>(points);
 
             Stroke = Brushes.Red;
+            Fill = Brushes.Transparent;
             StrokeThickness = 2;
         }
 
-        public override List<PointLatLng> Points { get; set; }
-
         public override Path CreatePath(List<Point> localPath, bool addBlurEffect)
         {
-            Path path = GetShape();
+            Path path = MyPath;
             if (localPath.Count > 1)
             {
                 StreamGeometry geometry = new StreamGeometry();

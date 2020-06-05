@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using WpfGMap.GMapShape;
@@ -15,24 +16,26 @@ namespace WpfGMap.GMapEditor
 {
     class ShapeEditor
     {
+        public EventHandler MovingCompleted;
+        public EventHandler PointMovingCompleted;
         GMapControl gMapControl;
         Dictionary<Thumb, GMapMarker> dicMarker = new Dictionary<Thumb, GMapMarker>();
         IShapable gMapShape;
-        GMapRectangle border;
+        GSRectangle border;
 
         public ShapeEditor()
         {
-            border = new GMapRectangle(new PointLatLng(), new PointLatLng());
+            border = new GSRectangle(new PointLatLng(), new PointLatLng());
             (border.Shape as Path).Stroke = Brushes.Black;
             (border.Shape as Path).StrokeThickness = 1;
             (border.Shape as Path).Fill = new SolidColorBrush(Color.FromArgb(50, 200, 200, 200));
-
+            (border.Shape as Path).Cursor = Cursors.SizeAll;
             moveThumb = new Thumb();
-            moveThumb.Width = 16;
-            moveThumb.Height = 16;
+            moveThumb.Style = Application.Current.FindResource("MovingThumb") as Style;
+            moveThumb.Width = 18;
+            moveThumb.Height = 18;
             moveMarker.Offset = new Point(-moveThumb.Width - 4, -moveThumb.Height - 4);
             moveThumb.DragDelta += Move_DragDelta;
-            moveThumb.DragStarted += Thumb_DragStarted;
             moveThumb.DragCompleted += Thumb_DragCompleted;
             moveMarker.Shape = moveThumb;
         }
@@ -68,34 +71,22 @@ namespace WpfGMap.GMapEditor
 
                 item.Value.Position = pos;
             }
-            //for (int i = 0; i < gMapShape.Points.Count; i++)
-            //{
-            //    //var StartPoint = gMapControl.FromLatLngToLocal(gMapShape.Points[i]);
-            //    //double posX = StartPoint.X + e.HorizontalChange;
-            //    //double posY = StartPoint.Y + e.VerticalChange;
-            //    //var pos = gMapControl.FromLocalToLatLng((int)posX, (int)posY);
-            //    //gMapShape.Points[i] = pos;
-            //}
             gMapControl.RegenerateShape(gMapShape);
 
             SetBorder(gMapShape.Points);
             gMapControl.RegenerateShape(border);
         }
 
-        GPoint StartPoint;
         private void Thumb_DragCompleted(object sender, DragCompletedEventArgs e)
         {
-            (sender as Thumb).Background = Brushes.Blue;
+            var thumb = sender as Thumb;
+            if (thumb == moveThumb)
+                MovingCompleted?.Invoke(this, new EventArgs());
+            else if (thumb != null)
+                PointMovingCompleted?.Invoke(this, new EventArgs());
         }
-
-        private void Thumb_DragStarted(object sender, DragStartedEventArgs e)
-        {
-            (sender as Thumb).Background = Brushes.Orange;
-            //StartPoint = gMapControl.FromLatLngToLocal(dicMarker[(sender as Thumb)].Position);
-            //StartPoint.X = dicMarker[(sender as Thumb)].LocalPositionX;
-            //StartPoint.Y = dicMarker[(sender as Thumb)].LocalPositionY;
-        }
-        Thumb moveThumb = new Thumb();
+        
+        Thumb moveThumb;
         GMapMarker moveMarker = new GMapMarker(new PointLatLng());
         internal void SetMarker(IShapable shape, GMapControl mapControl)
         {
@@ -115,10 +106,9 @@ namespace WpfGMap.GMapEditor
                 marker.Shape = thumbs[i];
                 marker.Offset = new Point(-thumbs[i].Width / 2, -thumbs[i].Height / 2);
                 thumbs[i].DragDelta += Thumb_DragDelta;
-                thumbs[i].DragStarted += Thumb_DragStarted;
                 thumbs[i].DragCompleted += Thumb_DragCompleted;
-                thumbs[i].Background = Brushes.Blue;
                 thumbs[i].Tag = i;
+                thumbs[i].Style = Application.Current.FindResource("PointThumb") as Style;
                 gMapControl.Markers.Add(marker);
                 dicMarker.Add(thumbs[i], marker);
             }

@@ -113,13 +113,23 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Command\AddPointCommand.cs" />
+    <Compile Include="Command\DrawData.cs" />
+    <Compile Include="Command\ICommand.cs" />
+    <Compile Include="Command\MovePointCommand.cs" />
+    <Compile Include="Command\MoveShapeCommand.cs" />
+    <Compile Include="Command\UndoRedoStack.cs" />
     <Compile Include="GMapEditor\ShapeEditor.cs" />
     <Compile Include="GMapShape\GMapBaseShape.cs" />
-    <Compile Include="GMapShape\GMapCircle.cs" />
-    <Compile Include="GMapShape\GMapEllipse.cs" />
-    <Compile Include="GMapShape\GMapLine.cs" />
-    <Compile Include="GMapShape\GMapPath.cs" />
-    <Compile Include="GMapShape\GMapRectangle.cs" />
+    <Compile Include="GMapShape\GSCircle.cs" />
+    <Compile Include="GMapShape\GSCircularArc.cs" />
+    <Compile Include="GMapShape\GSEllipse.cs" />
+    <Compile Include="GMapShape\GSLine.cs" />
+    <Compile Include="GMapShape\GSPolygon.cs" />
+    <Compile Include="GMapShape\GSRegularPolygon.cs" />
+    <Compile Include="GMapShape\GSRoute.cs" />
+    <Compile Include="GMapShape\GSRectangle.cs" />
+    <Compile Include="GMapShape\GSStar.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
